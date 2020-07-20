@@ -1,4 +1,4 @@
-// Copyright 2019-2020 gtp_exporter authors. All rights reserved.
+// Copyright 2020 gtp_exporter authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
@@ -22,6 +22,7 @@ import (
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
+// Variables for metadata.
 var (
 	// Version to be recognized in GoReleaser.
 	Version = "unset"

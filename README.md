@@ -6,7 +6,7 @@ A Prometheus exporter for [Linux kernel GTP-U](https://www.kernel.org/doc/html/l
 [![GoDoc](https://godoc.org/github.com/wmnsk/gtp_exporter?status.svg)](https://godoc.org/github.com/wmnsk/gtp_exporter)
 [![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/wmnsk/gtp_exporter/blob/master/LICENSE)
 
-GTP Exporter retieves and exports metrics from Linux kernel GTP tunneling module using netlink. No other implementations of GTP-U are supported.
+GTP Exporter retieves data from Linux GTP kernel driver using netlink, and exports metrics with them. No other implementations of GTP-U nor other platforms are supported.
 
 ## Getting started
 
@@ -35,12 +35,12 @@ Flags:
 
 ### Metrics
 
-| Name            | Description                                                          | Labels                            |
-|-----------------|----------------------------------------------------------------------|-----------------------------------|
-| gtp_up          | Whether the last query is successful.                                | -                                 |
-| gtp_tunnels     | The number of existing tunnels.                                      | version, peer                     |
-| gtp_devices     | The number of existing GTP devices.                                  | name, role                        |
-| gtp_module_info | Some of the information of GTP kernel module retrieved by `modinfo`. | filename, description, srcversion |
+| Name        | Description                                                          | Labels                            |
+|-------------|----------------------------------------------------------------------|-----------------------------------|
+| gtp_up      | Whether the last query is successful.                                | -                                 |
+| gtp_tunnels | The number of existing tunnels.                                      | version, peer                     |
+| gtp_devices | The number of existing GTP devices.                                  | name, role                        |
+| gtp_info    | Some of the information of GTP kernel module retrieved by `modinfo`. | filename, description, srcversion |
 
 Here's a example output from a sample S-GW that has GTP devices on S1-U and S5-U interfaces.
 
