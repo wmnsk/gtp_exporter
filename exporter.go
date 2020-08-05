@@ -105,6 +105,10 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 		_ = e.logger.Log("failed to collect gtp_module_info: %v", err)
 		ok = false
 	}
+
+	ch <- prometheus.MustNewConstMetric(
+		up, prometheus.GaugeValue, 1.0,
+	)
 }
 
 func (e *Exporter) collectTunnels(ch chan<- prometheus.Metric) error {
