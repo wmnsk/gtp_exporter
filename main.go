@@ -64,12 +64,7 @@ func main() {
 	_ = level.Info(logger).Log("msg", "Starting gtp_exporter", "version", version.Info())
 	_ = level.Info(logger).Log("msg", "Build context", "build_context", version.BuildContext())
 
-	exporter, err := NewExporter(logger)
-	if err != nil {
-		_ = level.Error(logger).Log("msg", "Error creating the exporter", "err", err)
-		os.Exit(1)
-	}
-	prometheus.MustRegister(exporter)
+	prometheus.MustRegister(NewExporter(logger))
 
 	http.Handle(
 		*metricsPath,

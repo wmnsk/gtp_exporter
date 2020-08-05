@@ -43,9 +43,14 @@ var (
 	)
 )
 
-// Option is a option to set to Exporter.
-type Option interface {
-	SetGTPOption(*Exporter) error
+// Option is an option function to set optional configurations to Exporter.
+type Option func(*Exporter)
+
+// SetLogger sets given log.Logger as a logger of Exporter.
+func SetLogger(l log.Logger) Option {
+	return func(exp *Exporter) {
+		exp.logger = l
+	}
 }
 
 // Exporter implements the prometheus.Exporter interface.
@@ -54,18 +59,18 @@ type Exporter struct {
 }
 
 // NewExporter creates a new Exporter.
-func NewExporter(logger log.Logger, opts ...Option) (*Exporter, error) {
+//
+// Put arbitrary number of Option to update Exporter at creation.
+func NewExporter(logger log.Logger, opts ...Option) *Exporter {
 	e := &Exporter{
 		logger: logger,
 	}
 
 	for _, opt := range opts {
-		if err := opt.SetGTPOption(e); err != nil {
-			return nil, err
-		}
+		opt(e)
 	}
 
-	return e, nil
+	return e
 }
 
 // Describe sends the super-set of all possible descriptors of metrics collected by
