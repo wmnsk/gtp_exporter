@@ -1,7 +1,8 @@
-// Copyright 2020 gtp_exporter authors. All rights reserved.
+// Copyright 2020-2023 gtp_exporter authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
+//go:build linux
 // +build linux
 
 // Command gtp_exporter implements a Prometheus exporter for Linux kernel GTP.
@@ -11,15 +12,16 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/log/level"
+	"github.com/alecthomas/kingpin/v2"
+	"github.com/go-kit/log"
+	"github.com/go-kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/promlog"
 	"github.com/prometheus/common/promlog/flag"
 	"github.com/prometheus/common/version"
-	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 // Variables for metadata.
@@ -97,7 +99,14 @@ func main() {
 	})
 
 	_ = level.Info(logger).Log("msg", "Listening on address", "address", *listenAddress)
-	if err := http.ListenAndServe(*listenAddress, nil); err != nil {
+
+	s := &http.Server{
+		Addr:         *listenAddress,
+		Handler:      nil,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+	}
+	if err := s.ListenAndServe(); err != nil {
 		_ = level.Error(logger).Log("msg", "Error starting HTTP server", "err", err)
 		os.Exit(1)
 	}

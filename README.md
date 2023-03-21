@@ -2,9 +2,10 @@
 
 A Prometheus exporter for [Linux kernel GTP-U](https://www.kernel.org/doc/html/latest/networking/gtp.html).
 
-[![CircleCI](https://circleci.com/gh/wmnsk/gtp_exporter.svg?style=shield)](https://circleci.com/gh/wmnsk/gtp_exporter)
-[![GoDoc](https://godoc.org/github.com/wmnsk/gtp_exporter?status.svg)](https://godoc.org/github.com/wmnsk/gtp_exporter)
-[![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/wmnsk/gtp_exporter/blob/master/LICENSE)
+[![CI status](https://github.com/wmnsk/gtp_exporter/actions/workflows/go.yml/badge.svg)](https://github.com/wmnsk/gtp_exporter/actions/workflows/go.yml)
+[![golangci-lint](https://github.com/wmnsk/gtp_exporter/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/wmnsk/gtp_exporter/actions/workflows/golangci-lint.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/wmnsk/gtp_exporter.svg)](https://pkg.go.dev/github.com/wmnsk/gtp_exporter)
+[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/wmnsk/gtp_exporter/blob/master/LICENSE)
 
 GTP Exporter retieves data from Linux GTP kernel driver using netlink, and exports metrics with them. No other implementations of GTP-U nor other platforms are supported.
 
@@ -47,7 +48,7 @@ Here's a example output from a sample S-GW that has GTP devices on S1-U and S5-U
 ```
 # HELP gtp_devices The number of existing GTP devices.
 # TYPE gtp_devices gauge
-gtp_devices{name="s1u",role="GGSN"} 1 // should be "SGSN". Perhaps a bug in kernel GTP or netlink package...?
+gtp_devices{name="s1u",role="GGSN"} 1 // should be "SGSN", but Kernel module doesn't have this value stored, and defaulted to "GGSN"
 gtp_devices{name="s5u",role="GGSN"} 1
 # HELP gtp_exporter_build_info A metric with a constant '1' value labeled by version, revision, branch, and goversion from which gtp_exporter was built.
 # TYPE gtp_exporter_build_info gauge

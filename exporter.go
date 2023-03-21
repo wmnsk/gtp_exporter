@@ -1,7 +1,8 @@
-// Copyright 2020 gtp_exporter authors. All rights reserved.
+// Copyright 2020-2023 gtp_exporter authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
+//go:build linux
 // +build linux
 
 package main
@@ -12,7 +13,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/go-kit/kit/log"
+	"github.com/go-kit/log"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/vishvananda/netlink"
 )
