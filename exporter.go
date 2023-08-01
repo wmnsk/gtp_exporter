@@ -143,7 +143,6 @@ func (e *Exporter) collectDevices(ch chan<- prometheus.Metric) error {
 			continue
 		}
 
-		fmt.Println(g.Role)
 		ch <- prometheus.MustNewConstMetric(
 			devices, prometheus.GaugeValue, 1, g.Name, roleToString(g.Role),
 		)
